@@ -107,6 +107,58 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// --- [새로 추가된 기능] 사용자 정의 항목 추가 함수 ---
+    function enableCustomInput(inputId, btnId, containerId, viewId, isTag = false) {
+        const input = document.getElementById(inputId);
+        const btn = document.getElementById(btnId);
+        const container = document.getElementById(containerId);
+        const viewContainer = document.getElementById(viewId);
+
+        // 항목 추가 로직
+        const addItem = () => {
+            const val = input.value.trim();
+            if (!val) return; // 빈칸이면 실행 안 함
+
+            // 라벨과 체크박스 생성
+            const label = document.createElement('label');
+            const chk = document.createElement('input');
+            chk.type = 'checkbox';
+            chk.value = val;
+            chk.checked = true; // 추가하자마자 체크된 상태로
+
+            label.appendChild(chk);
+            label.appendChild(document.createTextNode(val));
+            
+            // 리스트의 맨 앞에 추가 (잘 보이게)
+            container.insertBefore(label, container.firstChild);
+
+            // 미리보기 즉시 갱신
+            updateViewList(container, viewContainer, isTag); // 기존 함수 재사용
+
+            // 체크 해제 시 미리보기에서도 빠지도록 이벤트 연결
+            chk.addEventListener('change', () => {
+                updateViewList(container, viewContainer, isTag);
+            });
+
+            input.value = ''; // 입력창 비우기
+        };
+
+        // 버튼 클릭 시 실행
+        btn.addEventListener('click', addItem);
+
+        // 엔터키 칠 때 실행
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // 폼 전송 방지
+                addItem();
+            }
+        });
+    }
+
+    // 함수 실행 (플랫폼, 태그)
+    enableCustomInput('inputNewPlatform', 'btnNewPlatform', 'checkPlatform', 'viewPlatform');
+    enableCustomInput('inputNewTag', 'btnNewTag', 'checkTags', 'viewTags', true);
+
 // 7. 다운로드 기능
 function downloadImage() {
     const captureArea = document.getElementById('captureArea');
@@ -121,3 +173,4 @@ function downloadImage() {
         link.click();
     });
 }
+
