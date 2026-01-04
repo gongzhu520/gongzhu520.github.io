@@ -1,3 +1,25 @@
+/* --- [1. 폰트 정의] --- */
+
+/* 타이틀용: StrongArmy (ROKA) */
+@font-face {
+    font-family: 'StrongArmy';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.1/ROKAMedium.woff') format('woff');
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'StrongArmy';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.1/ROKABold.woff') format('woff');
+    font-weight: 700;
+    font-display: swap;
+}
+
+/* 본문용: Pretendard */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+
+/* --- [2. 기본 변수 및 설정] --- */
 :root {
     --bg-color: #fff0f5;       /* 전체 배경색 */
     --accent-color: #d14d4d;   /* 제목 색상 */
@@ -8,11 +30,17 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background-color: #333; /* 작업 환경 구분을 위해 어두운 배경 */
+    /* 기본 폰트를 프리텐다드로 설정 */
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    background-color: #333; 
     color: var(--text-main);
     height: 100vh;
-    overflow: hidden; /* 전체 스크롤 방지 */
+    overflow: hidden;
+}
+
+/* 입력창 폰트도 프리텐다드로 통일 */
+input, textarea, select, button {
+    font-family: 'Pretendard', sans-serif;
 }
 
 .app-container {
@@ -42,7 +70,7 @@ body {
 .color-row, .select-row { display: flex; gap: 10px; margin-bottom: 5px; }
 .sub-label { font-size: 0.8rem; color: #888; margin-bottom: 2px; }
 .file-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; }
-.file-fav { width: 100%; font-size: 0px; } /* 파일 input 작게 */
+.file-fav { width: 100%; font-size: 0px; } 
 details { background: #f9f9f9; padding: 5px; border-radius: 5px; margin-bottom: 5px; border: 1px solid #eee; }
 summary { cursor: pointer; font-size: 0.9rem; font-weight: bold; }
 .checkbox-area { margin-top: 5px; display: flex; flex-wrap: wrap; gap: 5px; }
@@ -58,7 +86,7 @@ summary { cursor: pointer; font-size: 0.9rem; font-weight: bold; }
 /* [오른쪽] 미리보기 영역 */
 .preview-area {
     flex: 1;
-    background: #555; /* 캔버스 바깥 배경 */
+    background: #555;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,17 +94,16 @@ summary { cursor: pointer; font-size: 0.9rem; font-weight: bold; }
     overflow: auto;
 }
 
-/* ★ 시트 디자인 (원본 이미지 비율 유지) */
+/* ★ 시트 디자인 */
 .sheet {
-    width: 1400px;  /* 고정 너비 */
-    height: 800px;  /* 고정 높이 */
+    width: 1400px;  
+    height: 800px;  
     background-color: var(--bg-color);
     padding: 30px 40px;
     box-shadow: 0 0 30px rgba(0,0,0,0.5);
     display: flex;
     flex-direction: column;
-    flex-shrink: 0; /* 줄어들지 않음 */
-    /* 화면이 작을 때 스케일 조정 (선택사항) */
+    flex-shrink: 0;
     transform-origin: center center;
 }
 
@@ -90,17 +117,20 @@ summary { cursor: pointer; font-size: 0.9rem; font-weight: bold; }
     padding-bottom: 5px;
 }
 .title {
-    font-family: 'Gowun Batang', serif;
+    /* 타이틀 폰트 적용 */
+    font-family: 'StrongArmy', serif;
     color: var(--accent-color);
-    font-size: 3.8rem;
-    font-weight: bold;
+    font-size: 4.2rem; /* 폰트가 조금 작아서 키움 */
+    font-weight: 700;
     line-height: 1;
+    letter-spacing: -1px;
 }
 .credits {
     text-align: right;
     font-size: 0.8rem;
     color: #666;
     line-height: 1.4;
+    font-family: 'Pretendard', sans-serif;
 }
 
 /* 본문 레이아웃 */
@@ -121,18 +151,21 @@ summary { cursor: pointer; font-size: 0.9rem; font-weight: bold; }
     margin-bottom: 15px;
 }
 .pink-label {
+    /* 소제목(큰 라벨) 폰트 적용 */
+    font-family: 'StrongArmy', sans-serif;
     display: inline-block;
     background-color: var(--pill-color);
-    padding: 4px 15px;
+    padding: 5px 18px;
     border-radius: 12px;
-    font-weight: bold;
-    font-size: 1.1rem;
+    font-weight: 500;
+    font-size: 1.3rem; /* 폰트 크기 조정 */
     margin-bottom: 8px;
     color: #333;
+    line-height: 1.2;
 }
 .persona-box {
     width: 100%;
-    aspect-ratio: 1/1; /* 정사각형 */
+    aspect-ratio: 1/1; 
     background: white;
     border-radius: 2px;
     overflow: hidden;
@@ -146,27 +179,34 @@ summary { cursor: pointer; font-size: 0.9rem; font-weight: bold; }
 }
 .info-item {
     display: flex;
-    align-items: flex-start; /* 텍스트 많을 때 위쪽 정렬 */
+    align-items: center; 
     gap: 10px;
 }
 .pink-pill {
+    /* 작은 라벨 폰트 적용 */
+    font-family: 'StrongArmy', sans-serif;
     background-color: var(--pill-color);
-    padding: 3px 12px;
+    padding: 4px 12px;
     border-radius: 12px;
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: 1.25rem; /* 폰트 크기 조정 */
+    font-weight: 500;
     color: #333;
     white-space: nowrap;
-    min-width: 85px; /* 라벨 너비 통일 */
+    min-width: 90px; 
     text-align: center;
     flex-shrink: 0;
+    line-height: 1.1;
+    padding-top: 6px; /* 폰트 수직 정렬 보정 */
 }
 .info-val {
+    /* 내용 폰트 적용 (프리텐다드) */
+    font-family: 'Pretendard', sans-serif;
     font-size: 1.1rem;
     color: #444;
     padding-top: 2px;
     word-break: break-all;
     line-height: 1.4;
+    font-weight: 600;
 }
 .info-val.small { font-size: 0.95rem; }
 
@@ -190,17 +230,17 @@ summary { cursor: pointer; font-size: 0.9rem; font-weight: bold; }
 }
 .slot {
     flex: 1;
-    aspect-ratio: 3/4; /* 세로형 직사각형 */
+    aspect-ratio: 3/4; 
     background: white;
     border-radius: 2px;
     overflow: hidden;
 }
 .slot img { width: 100%; height: 100%; object-fit: cover; }
 
-/* 중간 그리드 (트윗/플레이/CP vs 플랫폼/기타) */
+/* 중간 그리드 */
 .middle-grid {
     display: grid;
-    grid-template-columns: 1.1fr 1fr; /* 왼쪽이 조금 더 넓게 */
+    grid-template-columns: 1.1fr 1fr; 
     gap: 20px;
     flex: 1;
 }
@@ -217,10 +257,14 @@ summary { cursor: pointer; font-size: 0.9rem; font-weight: bold; }
     gap: 10px;
 }
 .text-content {
+    /* 내용 폰트 적용 (프리텐다드) */
+    font-family: 'Pretendard', sans-serif;
     flex: 1;
-    font-size: 1rem;
+    font-size: 1.05rem;
     line-height: 1.6;
-    word-break: keep-all; /* 단어 단위 줄바꿈 */
+    word-break: keep-all; 
+    font-weight: 500;
+    padding-top: 3px; /* 라벨과 높이 맞춤 */
 }
 .text-content span {
     display: inline-block;
@@ -232,47 +276,19 @@ summary { cursor: pointer; font-size: 0.9rem; font-weight: bold; }
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    min-height: 120px; /* 최소 높이 확보 */
+    min-height: 120px; 
 }
 .tag-cloud {
+    /* 태그 내용 폰트 (프리텐다드) */
+    font-family: 'Pretendard', sans-serif;
     flex: 1;
-    font-size: 0.95rem;
+    font-size: 1rem;
     line-height: 1.8;
     color: #555;
+    padding-top: 3px;
+    font-weight: 400;
 }
 .tag-cloud span { margin-right: 6px; }
-
-/* style.css 맨 아래에 추가 */
-
-.custom-add-box {
-    display: flex;
-    gap: 5px;
-    padding: 5px;
-    margin-bottom: 5px;
-    border-bottom: 1px dashed #ddd;
-}
-
-.custom-add-box input {
-    flex: 1;
-    font-size: 0.9rem;
-    padding: 5px;
-}
-
-.add-btn-small {
-    padding: 0 12px;
-    background-color: #666;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1.2rem;
-    line-height: 1;
-}
-
-.add-btn-small:hover {
-    background-color: #444;
-}
 
 /* --- [새로 추가된 입력창 스타일] --- */
 .custom-add-box {
@@ -285,8 +301,8 @@ summary { cursor: pointer; font-size: 0.9rem; font-weight: bold; }
 }
 
 .custom-add-box input {
-    flex: 1; /* 남은 공간 꽉 채우기 */
-    margin-bottom: 0 !important; /* 기존 마진 제거 */
+    flex: 1; 
+    margin-bottom: 0 !important; 
     font-size: 0.9rem;
 }
 
