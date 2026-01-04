@@ -114,6 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById(containerId);
         const viewContainer = document.getElementById(viewId);
 
+        if (!input || !btn) return; // 요소가 없으면 중단
+
         // 항목 추가 로직
         const addItem = () => {
             const val = input.value.trim();
@@ -133,14 +135,15 @@ document.addEventListener('DOMContentLoaded', () => {
             container.insertBefore(label, container.firstChild);
 
             // 미리보기 즉시 갱신
-            updateViewList(container, viewContainer, isTag); // 기존 함수 재사용
+            updateViewList(container, viewContainer); 
 
-            // 체크 해제 시 미리보기에서도 빠지도록 이벤트 연결
+            // 체크 해제/선택 시 미리보기 갱신 이벤트 연결
             chk.addEventListener('change', () => {
-                updateViewList(container, viewContainer, isTag);
+                updateViewList(container, viewContainer);
             });
 
             input.value = ''; // 입력창 비우기
+            input.focus();    // 연속 입력을 위해 포커스 유지
         };
 
         // 버튼 클릭 시 실행
@@ -173,4 +176,5 @@ function downloadImage() {
         link.click();
     });
 }
+
 
