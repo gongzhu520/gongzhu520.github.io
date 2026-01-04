@@ -6,186 +6,189 @@
     <title>AI Chat 자기소개 생성기</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <script src="script.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 <body>
-    <div class="main-container">
+    <div class="app-container">
         <div class="controls">
             <h2>📝 내용 입력</h2>
             
             <div class="control-group">
-                <h3>테마 색상</h3>
-                <input type="color" id="bgPicker" value="#fff0f5"> 배경색
-                <input type="color" id="textPicker" value="#d14d4d"> 강조색
+                <h3>1. 테마 색상</h3>
+                <div class="color-row">
+                    <label>배경색 <input type="color" id="bgPicker" value="#fff0f5"></label>
+                    <label>강조색 <input type="color" id="textPicker" value="#d14d4d"></label>
+                </div>
             </div>
 
             <div class="control-group">
-                <h3>기본 정보</h3>
+                <h3>2. 기본 정보</h3>
                 <input type="text" id="inputNick" placeholder="닉네임">
                 <input type="text" id="inputActivity" placeholder="활동명">
                 
-                <p>페르소나 이미지:</p>
+                <p class="sub-label">페르소나 이미지</p>
                 <input type="file" id="filePersona" accept="image/*">
+
+                <div class="select-row">
+                    <label>연령: 
+                        <select id="selectAge">
+                            <option value="성인">성인</option>
+                            <option value="미성년자">미성년자</option>
+                            <option value="비공개">비공개</option>
+                        </select>
+                    </label>
+                    <label>FUB: 
+                        <select id="selectFub">
+                            <option value="O">O</option>
+                            <option value="X">X</option>
+                        </select>
+                    </label>
+                </div>
+                
+                <label>관계 정리:
+                    <select id="selectRel">
+                        <option value="블락">블락</option>
+                        <option value="블언블">블언블</option>
+                        <option value="언팔로우">언팔로우</option>
+                    </select>
+                </label>
+                
+                <input type="text" id="inputPerm" placeholder="허용 범위 (예: 직멘 제외 가능)">
+                <textarea id="inputMine" placeholder="지뢰 (짧게 입력)"></textarea>
             </div>
 
             <div class="control-group">
-                <h3>선택 정보 (하나만 표시)</h3>
-                <label>연령:</label>
-                <select id="selectAge">
-                    <option value="성인">성인</option>
-                    <option value="미성년자">미성년자</option>
-                    <option value="비공개">비공개</option>
-                </select>
-                <br><br>
-                <label>FUB Free:</label>
-                <select id="selectFub">
-                    <option value="O">O</option>
-                    <option value="X">X</option>
-                </select>
-                <br><br>
-                <label>관계 정리:</label>
-                <select id="selectRel">
-                    <option value="블락">블락</option>
-                    <option value="블언블">블언블</option>
-                    <option value="언팔로우">언팔로우</option>
-                </select>
-                <br><br>
-                <label>허용 범위:</label>
-                <input type="text" id="inputPerm" placeholder="예: 직멘 제외 가능">
+                <h3>3. 정실캐 (5명)</h3>
+                <div class="file-grid">
+                    <input type="file" class="file-fav" accept="image/*">
+                    <input type="file" class="file-fav" accept="image/*">
+                    <input type="file" class="file-fav" accept="image/*">
+                    <input type="file" class="file-fav" accept="image/*">
+                    <input type="file" class="file-fav" accept="image/*">
+                </div>
             </div>
 
             <div class="control-group">
-                <h3>정실캐 (5명)</h3>
-                <input type="file" class="file-fav" accept="image/*">
-                <input type="file" class="file-fav" accept="image/*">
-                <input type="file" class="file-fav" accept="image/*">
-                <input type="file" class="file-fav" accept="image/*">
-                <input type="file" class="file-fav" accept="image/*">
-            </div>
-
-            <div class="control-group">
-                <h3>텍스트 입력</h3>
-                <label>지뢰:</label>
-                <textarea id="inputMine" placeholder="지뢰 키워드 입력"></textarea>
-                <label>기타:</label>
+                <h3>4. 상세 정보 (다중 선택)</h3>
                 <textarea id="inputEtc" placeholder="기타 하고 싶은 말"></textarea>
-            </div>
-
-            <div class="control-group scroll-box">
-                <h3>트윗 성향 (다중 선택)</h3>
-                <div id="checkTwitter" class="checkbox-area">
-                    </div>
-            </div>
-
-            <div class="control-group scroll-box">
-                <h3>플레이 성향</h3>
-                <div id="checkPlay" class="checkbox-area"></div>
-            </div>
-
-            <div class="control-group scroll-box">
-                <h3>CP 성향</h3>
-                <div id="checkCp" class="checkbox-area"></div>
-            </div>
-
-            <div class="control-group scroll-box">
-                <h3>플랫폼</h3>
-                <div id="checkPlatform" class="checkbox-area"></div>
-            </div>
-
-            <div class="control-group scroll-box">
-                <h3>선호 태그</h3>
-                <div id="checkTags" class="checkbox-area"></div>
+                
+                <details>
+                    <summary>트윗 성향 선택</summary>
+                    <div id="checkTwitter" class="checkbox-area"></div>
+                </details>
+                <details>
+                    <summary>플레이 성향 선택</summary>
+                    <div id="checkPlay" class="checkbox-area"></div>
+                </details>
+                <details>
+                    <summary>CP 성향 선택</summary>
+                    <div id="checkCp" class="checkbox-area"></div>
+                </details>
+                <details>
+                    <summary>플랫폼 선택</summary>
+                    <div id="checkPlatform" class="checkbox-area"></div>
+                </details>
+                <details>
+                    <summary>선호 태그 선택</summary>
+                    <div id="checkTags" class="checkbox-area"></div>
+                </details>
             </div>
 
             <button onclick="downloadImage()" class="save-btn">💾 이미지로 저장하기</button>
         </div>
 
-        <div class="preview-wrapper">
+        <div class="preview-area">
             <div id="captureArea" class="sheet">
                 <div class="header">
                     <h1 class="title">#AI_chat 자기소개</h1>
                     <div class="credits">
                         made by @G0NG_ZHU<br>
-                        사용·수정·가공 자유롭게 가능<br>
-                        시트 수정 요청은 스핀스핀/트위터로
+                        사용·수정·가공·배포 자유롭게 가능<br>
+                        시트 수정 요청은 푸슝/댓글/트위터로
                     </div>
                 </div>
 
-                <div class="content-body">
-                    <div class="left-col">
-                        <div class="label-box">Persona</div>
-                        <div class="persona-img-box" id="viewPersona">
-                            </div>
+                <div class="sheet-body">
+                    <div class="col-left">
+                        <div class="persona-wrapper">
+                            <span class="pink-label">Persona</span>
+                            <div class="persona-box" id="viewPersona"></div>
+                        </div>
 
-                        <div class="info-row">
-                            <span class="label-pill">닉네임:</span>
-                            <span class="info-text" id="viewNick"></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="label-pill">활동명:</span>
-                            <span class="info-text" id="viewActivity"></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="label-pill">연령:</span>
-                            <span class="info-text" id="viewAge">성인</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="label-pill">FUB free:</span>
-                            <span class="info-text" id="viewFub">O</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="label-pill">관계 정리:</span>
-                            <span class="info-text" id="viewRel">블락</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="label-pill">지뢰:</span>
-                            <div class="info-text small-text" id="viewMine"></div>
-                        </div>
-                        <div class="info-row">
-                            <span class="label-pill">허용 범위:</span>
-                            <span class="info-text" id="viewPerm">직멘 제외 가능</span>
+                        <div class="info-list">
+                            <div class="info-item">
+                                <span class="pink-pill">닉네임:</span>
+                                <span class="info-val" id="viewNick"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="pink-pill">활동명:</span>
+                                <span class="info-val" id="viewActivity"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="pink-pill">연령:</span>
+                                <span class="info-val" id="viewAge">성인</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="pink-pill">FUB free:</span>
+                                <span class="info-val" id="viewFub">O</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="pink-pill">관계 정리:</span>
+                                <span class="info-val" id="viewRel">블락</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="pink-pill">지뢰:</span>
+                                <span class="info-val small" id="viewMine"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="pink-pill">허용 범위:</span>
+                                <span class="info-val" id="viewPerm">직멘 제외 가능</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="right-col">
-                        <div class="fav-section">
-                            <div class="label-box">정실캐</div>
-                            <div class="fav-grid">
-                                <div class="fav-slot"></div>
-                                <div class="fav-slot"></div>
-                                <div class="fav-slot"></div>
-                                <div class="fav-slot"></div>
-                                <div class="fav-slot"></div>
+                    <div class="col-right">
+                        <div class="fav-row">
+                            <span class="pink-label" style="margin-right: 15px;">정실캐</span>
+                            <div class="fav-slots">
+                                <div class="slot"></div>
+                                <div class="slot"></div>
+                                <div class="slot"></div>
+                                <div class="slot"></div>
+                                <div class="slot"></div>
                             </div>
                         </div>
 
-                        <div class="text-list-grid">
-                            <div class="list-row">
-                                <span class="label-pill">트윗 성향:</span>
-                                <div class="list-content" id="viewTwitter"></div>
-                            </div>
-                            <div class="list-row">
-                                <span class="label-pill">플레이:</span>
-                                <div class="list-content" id="viewPlay"></div>
-                            </div>
-                            <div class="list-row">
-                                <span class="label-pill">CP 성향:</span>
-                                <div class="list-content" id="viewCp"></div>
-                            </div>
-                            <div class="list-row">
-                                <span class="label-pill">플랫폼:</span>
-                                <div class="list-content" id="viewPlatform"></div>
-                            </div>
-                             <div class="list-row">
-                                <span class="label-pill">기타:</span>
-                                <div class="list-content" id="viewEtc"></div>
-                            </div>
-                        </div>
-
-                        <div class="tag-section">
-                            <div class="label-box">선호 태그:</div>
-                            <div class="tag-content" id="viewTags">
+                        <div class="middle-grid">
+                            <div class="mid-col-1">
+                                <div class="text-group">
+                                    <span class="pink-pill">트윗 성향:</span>
+                                    <div class="text-content" id="viewTwitter"></div>
                                 </div>
+                                <div class="text-group">
+                                    <span class="pink-pill">플레이:</span>
+                                    <div class="text-content" id="viewPlay"></div>
+                                </div>
+                                <div class="text-group">
+                                    <span class="pink-pill">CP 성향:</span>
+                                    <div class="text-content" id="viewCp"></div>
+                                </div>
+                            </div>
+                            <div class="mid-col-2">
+                                <div class="text-group">
+                                    <span class="pink-pill">플랫폼:</span>
+                                    <div class="text-content" id="viewPlatform"></div>
+                                </div>
+                                <div class="text-group">
+                                    <span class="pink-pill">기타:</span>
+                                    <div class="text-content" id="viewEtc"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bottom-tags">
+                            <span class="pink-pill">선호 태그:</span>
+                            <div class="tag-cloud" id="viewTags"></div>
                         </div>
                     </div>
                 </div>
@@ -195,4 +198,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
