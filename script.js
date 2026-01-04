@@ -66,14 +66,26 @@ document.addEventListener('DOMContentLoaded', () => {
     bindInput('inputMine', 'viewMine');
     bindInput('inputEtc', 'viewEtc');
 
-    // 4. 색상 변경
+    // [수정됨] 4. 색상 변경
     const root = document.documentElement;
+    
+    // 배경색 변경
     document.getElementById('bgPicker').addEventListener('input', (e) => {
         root.style.setProperty('--bg-color', e.target.value);
     });
+
+    // 제목 색 변경 (큰 타이틀)
     document.getElementById('textPicker').addEventListener('input', (e) => {
         root.style.setProperty('--accent-color', e.target.value);
     });
+
+    // 강조색 변경 (소제목, 라벨 배경) - 새로 추가된 부분
+    const pillPicker = document.getElementById('pillPicker');
+    if(pillPicker) {
+        pillPicker.addEventListener('input', (e) => {
+            root.style.setProperty('--pill-color', e.target.value);
+        });
+    }
 
     // 5. 이미지 업로드 (페르소나)
     document.getElementById('filePersona').addEventListener('change', function(e) {
@@ -176,5 +188,6 @@ function downloadImage() {
         link.click();
     });
 }
+
 
 
