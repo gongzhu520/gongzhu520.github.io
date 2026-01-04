@@ -273,3 +273,35 @@ summary { cursor: pointer; font-size: 0.9rem; font-weight: bold; }
 .add-btn-small:hover {
     background-color: #444;
 }
+
+/* --- [새로 추가된 입력창 스타일] --- */
+.custom-add-box {
+    display: flex;
+    gap: 5px;
+    padding: 8px 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px dashed #ddd;
+    background: #fff;
+}
+
+.custom-add-box input {
+    flex: 1; /* 남은 공간 꽉 채우기 */
+    margin-bottom: 0 !important; /* 기존 마진 제거 */
+    font-size: 0.9rem;
+}
+
+.add-btn-small {
+    padding: 0 15px;
+    background-color: #666;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.add-btn-small:hover {
+    background-color: #444;
+}
