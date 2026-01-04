@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat 자기소개 생성기</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="main-container">
+        <div class="controls">
+            <h2>📝 내용 입력</h2>
+            
+            <div class="control-group">
+                <h3>테마 색상</h3>
+                <input type="color" id="bgPicker" value="#fff0f5"> 배경색
+                <input type="color" id="textPicker" value="#d14d4d"> 강조색
+            </div>
+
+            <div class="control-group">
+                <h3>기본 정보</h3>
+                <input type="text" id="inputNick" placeholder="닉네임">
+                <input type="text" id="inputActivity" placeholder="활동명">
+                
+                <p>페르소나 이미지:</p>
+                <input type="file" id="filePersona" accept="image/*">
+            </div>
+
+            <div class="control-group">
+                <h3>선택 정보 (하나만 표시)</h3>
+                <label>연령:</label>
+                <select id="selectAge">
+                    <option value="성인">성인</option>
+                    <option value="미성년자">미성년자</option>
+                    <option value="비공개">비공개</option>
+                </select>
+                <br><br>
+                <label>FUB Free:</label>
+                <select id="selectFub">
+                    <option value="O">O</option>
+                    <option value="X">X</option>
+                </select>
+                <br><br>
+                <label>관계 정리:</label>
+                <select id="selectRel">
+                    <option value="블락">블락</option>
+                    <option value="블언블">블언블</option>
+                    <option value="언팔로우">언팔로우</option>
+                </select>
+                <br><br>
+                <label>허용 범위:</label>
+                <input type="text" id="inputPerm" placeholder="예: 직멘 제외 가능">
+            </div>
+
+            <div class="control-group">
+                <h3>정실캐 (5명)</h3>
+                <input type="file" class="file-fav" accept="image/*">
+                <input type="file" class="file-fav" accept="image/*">
+                <input type="file" class="file-fav" accept="image/*">
+                <input type="file" class="file-fav" accept="image/*">
+                <input type="file" class="file-fav" accept="image/*">
+            </div>
+
+            <div class="control-group">
+                <h3>텍스트 입력</h3>
+                <label>지뢰:</label>
+                <textarea id="inputMine" placeholder="지뢰 키워드 입력"></textarea>
+                <label>기타:</label>
+                <textarea id="inputEtc" placeholder="기타 하고 싶은 말"></textarea>
+            </div>
+
+            <div class="control-group scroll-box">
+                <h3>트윗 성향 (다중 선택)</h3>
+                <div id="checkTwitter" class="checkbox-area">
+                    </div>
+            </div>
+
+            <div class="control-group scroll-box">
+                <h3>플레이 성향</h3>
+                <div id="checkPlay" class="checkbox-area"></div>
+            </div>
+
+            <div class="control-group scroll-box">
+                <h3>CP 성향</h3>
+                <div id="checkCp" class="checkbox-area"></div>
+            </div>
+
+            <div class="control-group scroll-box">
+                <h3>플랫폼</h3>
+                <div id="checkPlatform" class="checkbox-area"></div>
+            </div>
+
+            <div class="control-group scroll-box">
+                <h3>선호 태그</h3>
+                <div id="checkTags" class="checkbox-area"></div>
+            </div>
+
+            <button onclick="downloadImage()" class="save-btn">💾 이미지로 저장하기</button>
+        </div>
+
+        <div class="preview-wrapper">
+            <div id="captureArea" class="sheet">
+                <div class="header">
+                    <h1 class="title">#AI_chat 자기소개</h1>
+                    <div class="credits">
+                        made by @YOUR_ID<br>
+                        사용·수정·가공·배포 자유롭게 가능<br>
+                        시트 수정 요청은 푸슝/댓글/트위터로
+                    </div>
+                </div>
+
+                <div class="content-body">
+                    <div class="left-col">
+                        <div class="label-box">Persona</div>
+                        <div class="persona-img-box" id="viewPersona">
+                            </div>
+
+                        <div class="info-row">
+                            <span class="label-pill">닉네임:</span>
+                            <span class="info-text" id="viewNick"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label-pill">활동명:</span>
+                            <span class="info-text" id="viewActivity"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label-pill">연령:</span>
+                            <span class="info-text" id="viewAge">성인</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label-pill">FUB free:</span>
+                            <span class="info-text" id="viewFub">O</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label-pill">관계 정리:</span>
+                            <span class="info-text" id="viewRel">블락</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label-pill">지뢰:</span>
+                            <div class="info-text small-text" id="viewMine"></div>
+                        </div>
+                        <div class="info-row">
+                            <span class="label-pill">허용 범위:</span>
+                            <span class="info-text" id="viewPerm">직멘 제외 가능</span>
+                        </div>
+                    </div>
+
+                    <div class="right-col">
+                        <div class="fav-section">
+                            <div class="label-box">정실캐</div>
+                            <div class="fav-grid">
+                                <div class="fav-slot"></div>
+                                <div class="fav-slot"></div>
+                                <div class="fav-slot"></div>
+                                <div class="fav-slot"></div>
+                                <div class="fav-slot"></div>
+                            </div>
+                        </div>
+
+                        <div class="text-list-grid">
+                            <div class="list-row">
+                                <span class="label-pill">트윗 성향:</span>
+                                <div class="list-content" id="viewTwitter"></div>
+                            </div>
+                            <div class="list-row">
+                                <span class="label-pill">플레이:</span>
+                                <div class="list-content" id="viewPlay"></div>
+                            </div>
+                            <div class="list-row">
+                                <span class="label-pill">CP 성향:</span>
+                                <div class="list-content" id="viewCp"></div>
+                            </div>
+                            <div class="list-row">
+                                <span class="label-pill">플랫폼:</span>
+                                <div class="list-content" id="viewPlatform"></div>
+                            </div>
+                             <div class="list-row">
+                                <span class="label-pill">기타:</span>
+                                <div class="list-content" id="viewEtc"></div>
+                            </div>
+                        </div>
+
+                        <div class="tag-section">
+                            <div class="label-box">선호 태그:</div>
+                            <div class="tag-content" id="viewTags">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
