@@ -1,81 +1,100 @@
 :root {
-    --bg-color: #fff0f5;       /* 기본 배경색 (연한 분홍) */
-    --accent-color: #d14d4d;   /* 강조색 (진한 붉은색) */
-    --label-bg: #eac6d1;       /* 라벨 배경색 (탁한 분홍) */
-    --text-color: #333;
+    --bg-color: #fff0f5;       /* 전체 배경색 */
+    --accent-color: #d14d4d;   /* 제목 색상 */
+    --pill-color: #eac6d1;     /* 라벨(알약) 배경색 */
+    --text-main: #444;         /* 본문 글자색 */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     font-family: 'Noto Sans KR', sans-serif;
-    background-color: #eee;
-    padding: 20px;
+    background-color: #333; /* 작업 환경 구분을 위해 어두운 배경 */
+    color: var(--text-main);
+    height: 100vh;
+    overflow: hidden; /* 전체 스크롤 방지 */
 }
 
-.main-container {
+.app-container {
     display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: flex-start;
+    height: 100vh;
 }
 
-/* 왼쪽 컨트롤 패널 */
+/* [왼쪽] 컨트롤 패널 */
 .controls {
-    width: 350px;
+    width: 360px;
     background: white;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    height: 95vh;
     overflow-y: auto;
+    border-right: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
-.controls h2 { margin-bottom: 20px; font-size: 1.2rem; }
-.control-group { margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
-.control-group h3 { font-size: 0.9rem; color: #666; margin-bottom: 10px; }
-input[type="text"], textarea, select { width: 100%; padding: 5px; margin-bottom: 5px; }
-textarea { height: 60px; resize: none; }
-
-.checkbox-area label {
-    display: inline-block; margin-right: 8px; font-size: 13px; cursor: pointer;
+.controls h2 { margin-bottom: 10px; font-size: 1.2rem; }
+.controls h3 { margin-top: 10px; margin-bottom: 5px; font-size: 0.95rem; color: #666; }
+.controls input[type="text"], 
+.controls textarea, 
+.controls select {
+    width: 100%; padding: 6px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 5px;
 }
-.scroll-box { max-height: 150px; overflow-y: auto; background: #f9f9f9; padding: 5px; }
+.controls textarea { height: 50px; resize: none; }
+.color-row, .select-row { display: flex; gap: 10px; margin-bottom: 5px; }
+.sub-label { font-size: 0.8rem; color: #888; margin-bottom: 2px; }
+.file-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; }
+.file-fav { width: 100%; font-size: 0px; } /* 파일 input 작게 */
+details { background: #f9f9f9; padding: 5px; border-radius: 5px; margin-bottom: 5px; border: 1px solid #eee; }
+summary { cursor: pointer; font-size: 0.9rem; font-weight: bold; }
+.checkbox-area { margin-top: 5px; display: flex; flex-wrap: wrap; gap: 5px; }
+.checkbox-area label { font-size: 0.8rem; display: flex; align-items: center; gap: 3px; background: white; padding: 2px 5px; border: 1px solid #eee; border-radius: 3px; }
 
 .save-btn {
-    width: 100%; padding: 15px; background: var(--accent-color); color: white;
-    border: none; border-radius: 5px; font-size: 1.1rem; cursor: pointer; font-weight: bold;
+    margin-top: auto; padding: 15px; background: #007bff; color: white;
+    border: none; border-radius: 5px; font-size: 1.1rem; font-weight: bold; cursor: pointer;
 }
+.save-btn:hover { background: #0056b3; }
 
-/* 오른쪽 미리보기 (실제 시트 디자인) */
-.preview-wrapper {
+
+/* [오른쪽] 미리보기 영역 */
+.preview-area {
+    flex: 1;
+    background: #555; /* 캔버스 바깥 배경 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
     overflow: auto;
 }
 
+/* ★ 시트 디자인 (원본 이미지 비율 유지) */
 .sheet {
-    width: 1200px; /* 고정 너비 (고해상도) */
-    height: 675px; /* 16:9 비율 유지 */
+    width: 1400px;  /* 고정 너비 */
+    height: 800px;  /* 고정 높이 */
     background-color: var(--bg-color);
     padding: 30px 40px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
     display: flex;
     flex-direction: column;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    position: relative;
+    flex-shrink: 0; /* 줄어들지 않음 */
+    /* 화면이 작을 때 스케일 조정 (선택사항) */
+    transform-origin: center center;
 }
 
 /* 헤더 */
 .header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
+    align-items: flex-end;
+    margin-bottom: 10px;
     border-bottom: 2px solid white;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
 }
 .title {
     font-family: 'Gowun Batang', serif;
     color: var(--accent-color);
-    font-size: 3.5rem;
+    font-size: 3.8rem;
     font-weight: bold;
+    line-height: 1;
 }
 .credits {
     text-align: right;
@@ -85,84 +104,140 @@ textarea { height: 60px; resize: none; }
 }
 
 /* 본문 레이아웃 */
-.content-body {
+.sheet-body {
     display: flex;
-    flex: 1;
-    gap: 30px;
+    gap: 25px;
+    height: 100%;
 }
 
-/* 왼쪽 컬럼 */
-.left-col { width: 25%; display: flex; flex-direction: column; gap: 12px; }
+/* --- [왼쪽 컬럼] --- */
+.col-left {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+}
 
-.label-box {
-    background-color: var(--label-bg);
+.persona-wrapper {
+    margin-bottom: 15px;
+}
+.pink-label {
     display: inline-block;
-    padding: 5px 15px;
-    border-radius: 15px;
+    background-color: var(--pill-color);
+    padding: 4px 15px;
+    border-radius: 12px;
     font-weight: bold;
     font-size: 1.1rem;
-    margin-bottom: 5px;
-    width: fit-content;
-}
-
-.persona-img-box {
-    width: 100%;
-    aspect-ratio: 1/1;
-    background: white;
-    margin-bottom: 15px;
-    overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-}
-.persona-img-box img { width: 100%; height: 100%; object-fit: cover; }
-
-.info-row { display: flex; align-items: flex-start; margin-bottom: 5px; }
-.label-pill {
-    background-color: var(--label-bg);
-    padding: 2px 10px;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: bold;
-    margin-right: 10px;
-    white-space: nowrap;
-    min-width: 80px;
-    text-align: center;
+    margin-bottom: 8px;
     color: #333;
 }
-.info-text { font-size: 1.1rem; line-height: 1.6; color: #333; }
-.small-text { font-size: 0.9rem; white-space: pre-wrap; }
-
-/* 오른쪽 컬럼 */
-.right-col { width: 75%; display: flex; flex-direction: column; gap: 10px; }
-
-/* 정실캐 섹션 */
-.fav-section { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 10px; }
-.fav-grid { display: flex; gap: 15px; flex: 1; }
-.fav-slot {
-    flex: 1;
-    aspect-ratio: 3/4; /* 세로로 약간 긴 직사각형 혹은 정사각형 */
+.persona-box {
+    width: 100%;
+    aspect-ratio: 1/1; /* 정사각형 */
     background: white;
+    border-radius: 2px;
     overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
 }
-.fav-slot img { width: 100%; height: 100%; object-fit: cover; }
+.persona-box img { width: 100%; height: 100%; object-fit: cover; }
 
-/* 텍스트 리스트 (트윗성향, 플랫폼 등) */
-.text-list-grid { display: flex; flex-direction: column; gap: 8px; }
-.list-row { display: flex; align-items: flex-start; }
-.list-content { 
-    flex: 1; 
-    font-size: 1.1rem; 
-    line-height: 1.6; 
-    word-break: keep-all; 
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
-.list-item { margin-right: 15px; display: inline-block; }
-
-/* 태그 섹션 */
-.tag-section { margin-top: 10px; }
-.tag-content {
+.info-item {
+    display: flex;
+    align-items: flex-start; /* 텍스트 많을 때 위쪽 정렬 */
+    gap: 10px;
+}
+.pink-pill {
+    background-color: var(--pill-color);
+    padding: 3px 12px;
+    border-radius: 12px;
     font-size: 1rem;
-    line-height: 1.8;
-    color: #444;
-    margin-top: 5px;
+    font-weight: bold;
+    color: #333;
+    white-space: nowrap;
+    min-width: 85px; /* 라벨 너비 통일 */
+    text-align: center;
+    flex-shrink: 0;
 }
-.tag-span { margin-right: 8px; color: #555; }
+.info-val {
+    font-size: 1.1rem;
+    color: #444;
+    padding-top: 2px;
+    word-break: break-all;
+    line-height: 1.4;
+}
+.info-val.small { font-size: 0.95rem; }
+
+/* --- [오른쪽 컬럼] --- */
+.col-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 정실캐 */
+.fav-row {
+    display: flex;
+    align-items: flex-start;
+}
+.fav-slots {
+    flex: 1;
+    display: flex;
+    gap: 10px;
+}
+.slot {
+    flex: 1;
+    aspect-ratio: 3/4; /* 세로형 직사각형 */
+    background: white;
+    border-radius: 2px;
+    overflow: hidden;
+}
+.slot img { width: 100%; height: 100%; object-fit: cover; }
+
+/* 중간 그리드 (트윗/플레이/CP vs 플랫폼/기타) */
+.middle-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr; /* 왼쪽이 조금 더 넓게 */
+    gap: 20px;
+    flex: 1;
+}
+
+.mid-col-1, .mid-col-2 {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.text-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+.text-content {
+    flex: 1;
+    font-size: 1rem;
+    line-height: 1.6;
+    word-break: keep-all; /* 단어 단위 줄바꿈 */
+}
+.text-content span {
+    display: inline-block;
+    margin-right: 8px;
+}
+
+/* 하단 태그 */
+.bottom-tags {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    min-height: 120px; /* 최소 높이 확보 */
+}
+.tag-cloud {
+    flex: 1;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #555;
+}
+.tag-cloud span { margin-right: 6px; }
