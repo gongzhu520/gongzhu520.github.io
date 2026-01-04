@@ -218,19 +218,23 @@ summary { cursor: pointer; font-size: 0.9rem; font-weight: bold; }
     gap: 15px;
 }
 
-/* 정실캐 */
+/* 정실캐 섹션 수정 (세로 배치 & 정사각형) */
 .fav-row {
     display: flex;
+    flex-direction: column; /* 가로(row) -> 세로(column) 방향으로 변경 */
     align-items: flex-start;
+    gap: 10px; /* 소제목과 이미지 박스 사이 간격 */
 }
+
 .fav-slots {
-    flex: 1;
     display: flex;
     gap: 10px;
+    width: 100%; /* 부모 너비에 꽉 차게 */
 }
+
 .slot {
     flex: 1;
-    aspect-ratio: 3/4; 
+    aspect-ratio: 1/1; /* 비율을 3/4 -> 1/1 (정사각형)으로 변경 */
     background: white;
     border-radius: 2px;
     overflow: hidden;
@@ -321,3 +325,4 @@ summary { cursor: pointer; font-size: 0.9rem; font-weight: bold; }
 .add-btn-small:hover {
     background-color: #444;
 }
+
