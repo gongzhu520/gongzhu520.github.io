@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- [데이터 정의] ---
-    // 여기에 항목을 추가하면 체크박스가 자동으로 생깁니다.
     const dataOptions = {
         twitter: ["일상", "RT", "맘찍", "인용트", "글", "그림", "채팅로그", "우울", "욕설", "탐라대화", "앓이", "썰풀이", "OOC제작(배포)", "드림", "연성"],
         play: ["제작", "소비", "OOC"],
@@ -24,17 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
             label.appendChild(document.createTextNode(opt));
             container.appendChild(label);
 
-            // 이벤트 리스너: 체크할 때마다 미리보기 갱신
             input.addEventListener('change', () => {
                 updateViewList(container, viewContainer, isTag);
             });
         });
     }
 
-    // 화면 갱신 함수
     function updateViewList(inputContainer, viewContainer, isTag) {
         const checked = inputContainer.querySelectorAll('input:checked');
-        viewContainer.innerHTML = ''; // 초기화
+        viewContainer.innerHTML = ''; 
         
         checked.forEach(chk => {
             const span = document.createElement('span');
@@ -44,19 +41,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 초기화 실행
     createCheckboxes('checkTwitter', dataOptions.twitter, 'viewTwitter');
     createCheckboxes('checkPlay', dataOptions.play, 'viewPlay');
     createCheckboxes('checkCp', dataOptions.cp, 'viewCp');
     createCheckboxes('checkPlatform', dataOptions.platform, 'viewPlatform');
     createCheckboxes('checkTags', dataOptions.tags, 'viewTags', true);
 
-
     // --- [2. 기본 텍스트 및 선택박스 연결] ---
     function bindText(inputId, viewId) {
-        document.getElementById(inputId).addEventListener('input', (e) => {
-            document.getElementById(viewId).innerText = e.target.value;
-        });
+        const inputEl = document.getElementById(inputId);
+        const viewEl = document.getElementById(viewId);
+        if(inputEl && viewEl){
+            inputEl.addEventListener('input', (e) => {
+                viewEl.innerText = e.target.value;
+            });
+        }
     }
     bindText('inputNick', 'viewNick');
     bindText('inputActivity', 'viewActivity');
@@ -76,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         root.style.setProperty('--accent-color', e.target.value);
     });
 
-    // --- [4. 이미지 업로드 (페르소나)] ---
+    // --- [4. 이미지 업로드] ---
     document.getElementById('filePersona').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if(file) {
@@ -88,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- [5. 이미지 업로드 (정실캐 5칸)] ---
     const favInputs = document.querySelectorAll('.file-fav');
     const favSlots = document.querySelectorAll('.fav-slot');
 
@@ -106,14 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// --- [6. 이미지 저장 기능] ---
 function downloadImage() {
     const captureArea = document.getElementById('captureArea');
-    
-    // html2canvas 옵션: 고해상도, 투명 배경 방지
     html2canvas(captureArea, {
         scale: 2,
-        backgroundColor: null // CSS 배경색을 따름
+        backgroundColor: null 
     }).then(canvas => {
         const link = document.createElement('a');
         link.download = 'AI_Chat_Profile.png';
